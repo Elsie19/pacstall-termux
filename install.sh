@@ -64,7 +64,7 @@ if ! command -v apt &> /dev/null; then
 	fancy_message error "apt could not be found"
 	exit 1
 fi
-apt install -y -qq wget ping stow axel
+apt install -y -qq wget ping stow dpkg-scanpackages
 
 echo -e "|------------------------|"
 echo -e "|---${GREEN}Pacstall Installer${NC}---|"
@@ -80,7 +80,7 @@ fi
 echo
 if [[ -z "$(find -H /data/data/com.termux/files/usr/var/lib/apt/lists -maxdepth 0 -mtime -7)" ]]; then
 	fancy_message info "Updating"
-	apt-get -qq update
+	apt -qq update
 fi
 
 fancy_message info "Installing packages"
@@ -89,10 +89,10 @@ echo -ne "Do you want to install axel (faster downloads)? [${BIGreen}Y${NC}/${RE
 read -r reply <&0
 case "$reply" in
 	N*|n*) ;;
-	*) apt-get install -qq -y axel;;
+	*) apt install -qq -y axel;;
 esac
 
-apt-get install -qq -y curl wget stow build-essential unzip tree bc git iputils-ping
+apt install -qq -y curl wget stow build-essential unzip tree bc git ping
 
 LOGDIR="/data/data/com.termux/files/usr/var/log/pacstall/metadata"
 STGDIR="/data/data/com.termux/files/usr/share/pacstall"
@@ -121,16 +121,16 @@ echo "https://raw.githubusercontent.com/pacstall/pacstall-programs/master" > $ST
 
 fancy_message info "Pulling scripts from GitHub"
 for i in {error_log.sh,add-repo.sh,search.sh,download.sh,install-local.sh,upgrade.sh,remove.sh,update.sh,query-info.sh}; do
-	wget -q --show-progress -N https://raw.githubusercontent.com/pacstall/pacstall/master/misc/scripts/"$i" -P "$STGDIR/scripts" &
+	wget -q --show-progress -N https://raw.githubusercontent.com/termux-desktop/pacstall/master/misc/scripts/"$i" -P "$STGDIR/scripts" &
 done
 
-wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/bin/pacstall" "https://raw.githubusercontent.com/pacstall/pacstall/master/pacstall" &
-wget -q --show-progress --progress=bar:force -O "/usr/share/man/man8/pacstall.8.gz" "https://raw.githubusercontent.com/pacstall/pacstall/master/misc/pacstall.8.gz" &
+wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/bin/pacstall" "https://raw.githubusercontent.com/termux-desktop/pacstall/master/pacstall" &
+wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/share/man/man8/pacstall.8.gz" "https://raw.githubusercontent.com/termux-desktop/pacstall/master/misc/pacstall.8.gz" &
 
 mkdir -p "/data/data/com.termux/files/usr/share/bash-completion/completions"
 mkdir -p "/data/data/com.termux/files/usr/share/fish/vendor_completions.d"
-wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/share/bash-completion/completions/pacstall" "https://raw.githubusercontent.com/pacstall/pacstall/master/misc/completion/bash" &
-wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/share/fish/vendor_completions.d/pacstall.fish" "https://raw.githubusercontent.com/pacstall/pacstall/master/misc/completion/fish" &
+wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/share/bash-completion/completions/pacstall" "https://raw.githubusercontent.com/termux-desktop/pacstall/master/misc/completion/bash" &
+wget -q --show-progress --progress=bar:force -O "/data/data/com.termux/files/usr/share/fish/vendor_completions.d/pacstall.fish" "https://raw.githubusercontent.com/termux-desktop/pacstall/master/misc/completion/fish" &
 
 wait
 

@@ -46,19 +46,19 @@ fi
 	#wget -q -N https://raw.githubusercontent.com/"$USERNAME"/pacstall/"$BRANCH"/misc/scripts/"$i" -P "$STGDIR/scripts" &
 done
 
-wget -q -N https://raw.githubusercontent.com/"$USERNAME"/pacstall/"$BRANCH"/pacstall -P /bin &
-wget -q -O /data/data/com.termux/files/usr/share/man/man8/pacstall.8.gz https://raw.githubusercontent.com/"$USERNAME"/pacstall/"$BRANCH"/misc/pacstall.8.gz &
+wget -q -N https://raw.githubusercontent.com/termux-desktop/pacstall/main/pacstall -P /bin &
+wget -q -O /data/data/com.termux/files/usr/share/man/man8/pacstall.8.gz https://raw.githubusercontent.com/termux-desktop/pacstall/main/misc/pacstall.8.gz &
 mkdir -p /data/data/com.termux/files/usr/share/bash-completion/completions &
-wget -q -O /data/data/com.termux/files/usr/share/bash-completion/completions/pacstall https://raw.githubusercontent.com/"$USERNAME"/pacstall/"$BRANCH"/misc/completion/bash &
+wget -q -O /data/data/com.termux/files/usr/share/bash-completion/completions/pacstall https://raw.githubusercontent.com/termux-desktop/pacstall/main/misc/completion/bash &
 
 if command -v fish &> /dev/null; then
-	wget -q -O /data/data/com.termux/files/usr/share/fish/vendor_completions.d/pacstall.fish https://raw.githubusercontent.com/"$USERNAME"/pacstall/"$BRANCH"/misc/completion/fish &
+	wget -q -O /data/data/com.termux/files/usr/share/fish/vendor_completions.d/pacstall.fish https://raw.githubusercontent.com/termux-deskto/pacstall/main/misc/completion/fish &
 fi
 
 wait
 
-chmod +x /bin/pacstall
-chmod +x /usr/share/pacstall/scripts/*
+chmod +x /data/data/com.termux/files/usr/bin/pacstall
+chmod +x /data/data/com.termux/files/usr/share/pacstall/scripts/*
 
 # Bling Bling update ascii
 echo '
@@ -68,16 +68,5 @@ echo '
  / ____/ /_/ / /__(__  ) /_/ /_/ / / /
 /_/    \__,_/\___/____/\__/\__,_/_/_/
 '
-if [[ "$USERNAME" == "pacstall" ]] && [[ "$BRANCH" == "master" ]]; then
-	echo -e "[${BGreen}+${NC}] INFO: You are at version $(pacstall -V)"
-	echo -e "[${BYellow}*${NC}] WARNING: Be sure to check our GitHub release page to make sure you have no incompatible code: https://github.com/pacstall/pacstall/releases"
-else
-	echo -e "[${BYellow}*${NC}] WARNING: You are using a ${RED}development${NC} version of $(pacstall -V)"
-	echo -e "[${BYellow}*${NC}] WARNING: There may be bugs in the code."
-	echo -e "[${BYellow}*${NC}] WARNING: Please report them to the Pacstall team through \e]8;;https://github.com/pacstall/pacstall/issues\aGitHub\e]8;;\a or \e]8;;https://discord.com/invite/yzrjXJV6K8\aDiscord\e]8;;\a"
-
-fi
-echo "$USERNAME $BRANCH" | tee "$STGDIR/repo/update" > /dev/null
-exit 0
 
 # vim:set ft=sh ts=4 sw=4 noet:
