@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 
 #     ____                  __        ____
 #    / __ \____ ___________/ /_____ _/ / /
