@@ -64,7 +64,7 @@ if ! command -v apt &> /dev/null; then
 	fancy_message error "apt could not be found"
 	exit 1
 fi
-apt install -y -qq wget ping stow dpkg-scanpackages
+apt install -y -qq wget termux-tools stow dpkg-scanpackages
 
 echo -e "|------------------------|"
 echo -e "|---${GREEN}Pacstall Installer${NC}---|"
@@ -92,7 +92,7 @@ case "$reply" in
 	*) apt install -qq -y axel;;
 esac
 
-apt install -qq -y curl wget stow build-essential unzip tree bc git ping
+apt install -qq -y curl wget stow build-essential unzip tree bc git termux-tools
 
 LOGDIR="/data/data/com.termux/files/usr/var/log/pacstall/metadata"
 STGDIR="/data/data/com.termux/files/usr/share/pacstall"
